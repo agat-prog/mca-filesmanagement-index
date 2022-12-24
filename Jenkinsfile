@@ -6,7 +6,7 @@ pipeline {
         ZOOKEEPER_HOST = "${env.BRANCH_NAME == "main" ? "zookeeper.tfm-prod-svc-agat-prog.svc.cluster.local" : "zookeeper.tfm-pre-svc-agat-prog.svc.cluster.local"}"
         DEPLOY = "${env.BRANCH_NAME == "main" || env.BRANCH_NAME == "develop" ? "true" : "false"}"
         BUILD = "${env.BRANCH_NAME == "develop" || env.BRANCH_NAME.startsWith("release") || env.BRANCH_NAME == "main" ? "true" : "false"}"
-        REGISTRY = 'agatalba/tfm-mca-filemanagement-bpm'
+        REGISTRY = 'agatalba/tfm-mca-filemanagement-index'
     }
 	options {
 	    buildDiscarder(logRotator(numToKeepStr: "2"))
@@ -56,7 +56,7 @@ pipeline {
             }
             steps {
             	echo "version -- ${REGISTRY}" 
-                sh "mvn -f bpm-api/pom.xml compile com.google.cloud.tools:jib-maven-plugin:3.2.0:build -Dimage=${REGISTRY}:${pomVersion} -DskipTests -Djib.to.auth.username=agatalba -Djib.to.auth.password=agat1978#"                
+                sh "mvn compile com.google.cloud.tools:jib-maven-plugin:3.2.0:build -Dimage=${REGISTRY}:${pomVersion} -DskipTests -Djib.to.auth.username=agatalba -Djib.to.auth.password=agat1978#"                
             }
         }  
         stage('Deploy into Kubernetes') {
@@ -70,7 +70,7 @@ pipeline {
                 }
             }  
             steps {
-                sh "helm upgrade -n ${NAMESPACE} -f helm/values.yaml --set namespace=${NAMESPACE} --set image.tag='${pomVersion}' --set mysql.host=${MYSQL_HOST} --set zookeeper.host=${ZOOKEEPER_HOST} bpm-release helm/"
+                sh "helm upgrade -n ${NAMESPACE} -f helm/values.yaml --set namespace=${NAMESPACE} --set image.tag='${pomVersion}' --set mysql.host=${MYSQL_HOST} --set zookeeper.host=${ZOOKEEPER_HOST} index-release helm/"
             }
         }              
     }
