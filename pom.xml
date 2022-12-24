@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
 	<groupId>index</groupId>
 	<artifactId>index</artifactId>
-	<version>1.0.0-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<description>Microservicio para flujos de procesos (bpm)</description>
 
 	<parent>
@@ -18,6 +18,31 @@
 		<checkstyle-maven-plugin.version>3.2.0</checkstyle-maven-plugin.version>
 		<checkstyle.version>9.2.1</checkstyle.version>		
 	</properties>
+	
+	<repositories>
+		<repository>
+			<id>filesmanagements-repository</id>
+			<name>Artifactory para dependencias Release</name>
+			<url>http://mapeado-settings</url>
+			<layout>default</layout>		
+			<releases></releases>	
+		</repository>
+	</repositories>
+
+	<distributionManagement>
+		<repository>
+			<id>release-artifacts-repository</id>
+			<name>Artifactory para dependencias Release</name>
+			<url>http://artifactory:8081/artifactory/libs-release/</url>
+			<layout>default</layout>
+		</repository>
+		<snapshotRepository>
+			<id>snapshot-artifacts-repository</id>
+			<name>Artifactory para dependencias snapshot</name>
+			<url>http://artifactory:8081/artifactory/libs-snapshot/</url>
+			<layout>default</layout>
+		</snapshotRepository>
+	</distributionManagement>	
 
 	<dependencies>
 		<dependency>
