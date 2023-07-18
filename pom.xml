@@ -2,7 +2,7 @@
   <modelVersion>4.0.0</modelVersion>
 	<groupId>index</groupId>
 	<artifactId>index</artifactId>
-	<version>1.0.3-SNAPHOT</version>
+	<version>1.0.3</version>
 	<description>Microservicio para flujos de procesos (bpm)</description>
 
 	<parent>
